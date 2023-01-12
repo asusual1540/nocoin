@@ -16,7 +16,7 @@ import { IAuthSession } from "../reducers/auth/types";
 
 const signupDevice = async (payload: { username: string; password: string }) => {
   const { data } = await axios.post<IAuthSession>(
-    "http://128.199.207.121:7351/api/signup",
+    "",
     { username: payload.username, password: payload.password },
     {
       headers: {
@@ -32,7 +32,7 @@ const signupDevice = async (payload: { username: string; password: string }) => 
 
 const loginDevice = async (payload: { username: string; password: string }) => {
   const { data } = await axios.post<IAuthSession>(
-    "http://128.199.207.121:7351/api/login",
+    "",
     { username: payload.username, password: payload.password },
     {
       headers: {
