@@ -1,4 +1,4 @@
-import { User } from "@heroiclabs/nakama-js";
+
 import {
     LOGIN_DEVICE_REQUEST,
     LOGIN_DEVICE_SUCCESS,
