@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 import { useTransition } from 'react-spring';
 import Head from 'next/head'
-import HelixCarousel from "../components/helix_carousel"
+// import NocoinCarousel from "../components/puzzle_carousel"
 import BlockCarousel from "../components/block_carousel"
-import HelixNav from "../components/helix_nav"
-import HelixBanner from "../components/helix_banner"
-import HelixSidebar from "../components/helix_sidebar"
-import HelixAuthentication from "../components/helix_authentication"
+import NocoinNav from "../components/nocoin_nav"
+// import NocoinBanner from "../components/nocoin_banner"
+import NocoinSidebar from "../components/nocoin_sidebar"
+// import NocoinTransfer from "../components/nocoin_transfer"
 
 export default function Home() {
   const [contentHeight, setContentHeight] = useState<String>("1080");
@@ -64,10 +64,10 @@ export default function Home() {
 
 
   return (
-    <div className='top_helix relative'>
+    <div className='top_nocoin relative'>
       <Head>
         <title>NoCoin</title>
-        <meta name="description" content="Created by Helix" />
+        <meta name="description" content="Created by Nocoin" />
         <meta name="viewport" content="width=device-width; height=device-height; initial-scale=1; viewport-fit=cover"></meta>
         <meta name="mobile-web-app-capable" content="yes"></meta>
         <meta name="apple-mobile-web-app-capable" content="yes"></meta>
@@ -75,13 +75,13 @@ export default function Home() {
 
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <HelixNav sideBarShown={sideBarShown} openSideBar={openSideBar} closeSidebar={closeSidebar} openLogInUser={openLogInUser}/>
+      <NocoinNav sideBarShown={sideBarShown} openSideBar={openSideBar} closeSidebar={closeSidebar} openLogInUser={openLogInUser}/>
 
-      {transitions((style, item) => item && <HelixAuthentication style={style} closeAuthModal={closeAuthModal} logInUser={logInUser} signUpUser={signUpUser} />)}
-      <HelixSidebar sideBarShown={sideBarShown} openLogInUser={openLogInUser} openSignUpUser={openSignUpUser} />
+      {/* {transitions((style, item) => item && <NocoinAuthentication style={style} closeAuthModal={closeAuthModal} logInUser={logInUser} signUpUser={signUpUser} />)} */}
+      <NocoinSidebar sideBarShown={sideBarShown} openLogInUser={openLogInUser} openSignUpUser={openSignUpUser} />
       <main onClick={() => closeSidebar()} className="overflow-y-auto" style={{ height: `${contentHeight}px` }}>
 
-        {/* <HelixBanner sideBarShown={sideBarShown}/> */}
+        {/* <NocoinBanner sideBarShown={sideBarShown}/> */}
 
         <BlockCarousel title="Blocks" alwaysOpen={false} sideBarShown={sideBarShown} />
 
@@ -105,15 +105,15 @@ export default function Home() {
 
 
 
-        <HelixCarousel title="Mathematics/Algebra" alwaysOpen={false} sideBarShown={sideBarShown} />
-        <HelixCarousel title="Science/Chemestry" alwaysOpen={false} sideBarShown={sideBarShown} />
-        <HelixCarousel title="Agriculture" alwaysOpen={false} sideBarShown={sideBarShown} />
-        <HelixCarousel title="Physics/Momentum" alwaysOpen={false} sideBarShown={sideBarShown} />
-        <HelixCarousel title="Philosophy" alwaysOpen={false} sideBarShown={sideBarShown} />
-        <HelixCarousel title="Science/Computer" alwaysOpen={false} sideBarShown={sideBarShown} />
-        <HelixCarousel title="Religion/Hinduism" alwaysOpen={false} sideBarShown={sideBarShown} />
-        <HelixCarousel title="History/BronzeAge" alwaysOpen={false} sideBarShown={sideBarShown} />
-        <HelixCarousel title="Computer/DistributedSystems" alwaysOpen={false} sideBarShown={sideBarShown} />
+        {/* <NocoinCarousel title="Mathematics/Algebra" alwaysOpen={false} sideBarShown={sideBarShown} />
+        <NocoinCarousel title="Science/Chemestry" alwaysOpen={false} sideBarShown={sideBarShown} />
+        <NocoinCarousel title="Agriculture" alwaysOpen={false} sideBarShown={sideBarShown} />
+        <NocoinCarousel title="Physics/Momentum" alwaysOpen={false} sideBarShown={sideBarShown} />
+        <NocoinCarousel title="Philosophy" alwaysOpen={false} sideBarShown={sideBarShown} />
+        <NocoinCarousel title="Science/Computer" alwaysOpen={false} sideBarShown={sideBarShown} />
+        <NocoinCarousel title="Religion/Hinduism" alwaysOpen={false} sideBarShown={sideBarShown} />
+        <NocoinCarousel title="History/BronzeAge" alwaysOpen={false} sideBarShown={sideBarShown} />
+        <NocoinCarousel title="Computer/DistributedSystems" alwaysOpen={false} sideBarShown={sideBarShown} /> */}
 
       </main>
 

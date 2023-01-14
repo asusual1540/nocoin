@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
 
-import authReducer from "./auth/authReducer";
+import blockReducer from "./blockchain/blockReducer";
 
 const rootReducer = combineReducers({
-  auth: authReducer,
+  blockchain: blockReducer,
 });
 
-export type AuthState = ReturnType<typeof rootReducer>;
+export type NocoinState = ReturnType<typeof rootReducer>;
 
 export default rootReducer;

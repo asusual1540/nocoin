@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-export default function HelixSidebar(props: {sideBarShown : boolean, openLogInUser: any, openSignUpUser: any}) {
+export default function NocoinSidebar(props: {sideBarShown : boolean, openLogInUser: any, openSignUpUser: any}) {
     const [showDropDown, setShowDropDown] = useState<boolean>(false);
 
     return (
