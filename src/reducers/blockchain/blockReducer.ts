@@ -13,7 +13,7 @@ import {
   };
 
   
-  const reducers = (state = initialState, action: BlockchainActions) => {
+  const reducers = (state = initialState, action: BlockchainActions): BlockchainState => {
     switch (action.type) {
       case GET_BLOCKCHAIN_REQUEST:
         return {

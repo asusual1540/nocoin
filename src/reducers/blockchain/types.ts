@@ -2,7 +2,7 @@
 import {
     GET_BLOCKCHAIN_REQUEST,
     GET_BLOCKCHAIN_SUCCESS,
-    GET_BLOCKCHAIN_FAILURE
+    GET_BLOCKCHAIN_FAILURE,
   } from "./actionTypes";
   
 
