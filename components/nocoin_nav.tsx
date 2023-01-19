@@ -7,7 +7,7 @@ import * as walletActions from "../src/reducers/wallet/actionTypes"
 import { NocoinState } from "../src/reducers/rootReducer";
 
 
-export default function HelixNav(props: any) {
+export default function NocoinNav(props: {sideBarShown: boolean, openSideBar: any, closeSidebar: any, openSendCoinModal:any, openPuzzleCreateModal:any}) {
     const dispatch = useDispatch()
     const wallet = useSelector((state: NocoinState) => state.wallet)
     useEffect(() => {
@@ -101,7 +101,7 @@ export default function HelixNav(props: any) {
 
                 <div className="px-2 py-1 mr-3 rounded">
 
-                    <button onClick={props.openLogInUser} className="flex justify-center items-center ">
+                    <button className="flex justify-center items-center ">
                         {wallet.loading ? <p className="text-white text-1xl font-medium mr-3">Connect Wallet</p> :
                             <p className="text-white text-1xl font-medium mr-3">{`${wallet.details.address} (${wallet.details.balance})`}</p>}
                         <img className="mr-3" src="/helix-avatar.svg" width={31} />

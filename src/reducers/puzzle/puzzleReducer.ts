@@ -2,6 +2,9 @@ import {
     GET_PUZZLE_REQUEST,
     GET_PUZZLE_SUCCESS,
     GET_PUZZLE_FAILURE,
+    CREATE_PUZZLE_REQUEST,
+    CREATE_PUZZLE_SUCCESS,
+    CREATE_PUZZLE_FAILURE,
   } from "./actionTypes";
   
   import { PuzzleActions, PuzzleState } from "./types";
@@ -10,7 +13,8 @@ import {
     loading: true,
     pending: false,
     pool: [],
-    error: ""
+    error: "",
+    recent: null,
   };
 
   
@@ -33,7 +37,27 @@ import {
         return {
           ...state,
           loading: false,
-          pool: [...state.pool, ...action.payload.pool],
+          pool: [...action.payload.pool],
+          error: null,
+        };
+      case CREATE_PUZZLE_REQUEST:
+        return {
+          ...state,
+          recent: null,
+        };
+      case CREATE_PUZZLE_FAILURE:
+        return {
+          ...state,
+          recent: null,
+          error: action.payload.error,
+        };
+  
+      case CREATE_PUZZLE_SUCCESS:
+        console.log("action.payload.pool", action.payload)
+        return {
+          ...state,
+          recent: {...action.payload.puzzle},
+          pool: [...state.pool],
           error: null,
         };
   

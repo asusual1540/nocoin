@@ -59,12 +59,12 @@ export default function BlockCarousel(props: { title: String, alwaysOpen: boolea
 
     const { carouselFragment, slideToPrevItem, slideToNextItem } = useSpringCarousel({
         gutter: 24,
-        itemsPerSlide: 1,
+        itemsPerSlide: transaction.pool.length < itemsPerSlide ? transaction.pool.length || 1 : itemsPerSlide,
         withLoop: true,
         items: transaction.pool.length != 0 ? transaction.pool.map((transaction) => ({
             id: transaction.id.toString(),
             renderItem: (
-                <div className="relative cursor-pointer bg-helix-light p-6 rounded-md flex flex-col 3xl:w-1/4 2xl:w-1/4 xl:w-1/3 lg:w-1/2 mlg:w-1/2 md:w-2/3 sm:w-full xsm:w-full xxsm:w-full">
+                <div className="relative cursor-pointer bg-helix-light p-6 rounded-md flex flex-col">
 
                     <div className='text-helix-sky rounded-md'>
 

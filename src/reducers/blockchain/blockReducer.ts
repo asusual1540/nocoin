@@ -32,7 +32,7 @@ import {
         return {
           ...state,
           loading: false,
-          chain: [...state.chain, ...action.payload.chain],
+          chain: [...action.payload.chain],
           error: null,
         };
   

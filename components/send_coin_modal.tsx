@@ -1,19 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { animated } from "react-spring";
+import { useDispatch, useSelector } from "react-redux"
+
+import { NocoinState } from "../src/reducers/rootReducer";
+import * as transactionAction from "../src/reducers/transaction/actionTypes"
 
 
 export default function SendCoinModal({ style, closeSendCoinModal, sendCoinModal, openSendCoinModal }: any) {
 
     const [amount, setAmount] = useState('')
-    const [recepient, setRecepient] = useState('')
-    const [loading, setLoading] = useState<boolean>(false)
+    const [recipient, setRecepient] = useState('')
+    const [loading, setLoading] = useState<boolean>()
+    const [coinSent, setCoinSent] = useState<boolean>()
+
+    const dispatch = useDispatch()
+    const transaction = useSelector((state: NocoinState) => state.transaction)
+
+    useEffect(() => {
+        if (transaction.recent) {
+            setLoading(false)
+            setCoinSent(true)
+        }
+    }, [transaction])
 
 
-
-    const handleAuth = (e: any) => {
+    const handleSubmit = (e: any) => {
         setLoading(true)
         e.preventDefault();
-
+        const payload = { "recipient": recipient, "amount": Number(amount) }
+        console.log("request sign up", payload)
+        dispatch({ type: transactionAction.SEND_COIN_REQUEST, payload })
     }
 
 
@@ -36,24 +52,28 @@ export default function SendCoinModal({ style, closeSendCoinModal, sendCoinModal
                         <label className="block text-black text-md mb-2 text-white" htmlFor="username">
                             Recepient
                         </label>
-                        <input value={recepient} onChange={e => setRecepient(e.target.value)} className="shadow rounded-xl appearance-none border w-full py-2 px-3 caret-black leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Recepient" />
+                        <input value={recipient} onChange={e => setRecepient(e.target.value)} className="shadow rounded-xl appearance-none border w-full py-2 px-3 caret-black leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Recepient" />
                     </div>
                     <div className="mb-4">
                         <label className="block text-black text-md mb-2 text-white" htmlFor="amount">
                             Amount
                         </label>
-                        <input value={amount} onChange={e => setAmount(e.target.value)} className="shadow rounded-xl appearance-none border w-full py-2 px-3 caret-black leading-tight focus:outline-none focus:shadow-outline" id="amount" type="text" placeholder="Amount" />
+                        <input value={amount} onChange={e => setAmount(e.target.value)} className="shadow rounded-xl appearance-none border w-full py-2 px-3 caret-black leading-tight focus:outline-none focus:shadow-outline" id="amount" type="number" placeholder="Amount" />
                     </div>
-                    
+
                     <div className="flex justify-center">
 
-                        <button type="submit" className="helix-auth-button relative" onClick={(e) => handleAuth(e)}>
-                           Send
-                            <span className="absolute right-6">{loading && <img className="" src="/helix-loader.svg" width={30} />}</span>
+                        <button type="submit" className="helix-auth-button relative flex justify-center items-center" onClick={(e) => handleSubmit(e)}>
+                            <p>{loading && "Loading" || coinSent && "Sent" || "Send"} </p>
+                            <span className="absolute right-6">{loading && <img className="" src="/helix-loader.svg" width={30} />}
+                                {coinSent && <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#78e3ec" className="w-6 h-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                </svg>}
+                            </span>
                         </button>
                     </div>
 
-                    
+
 
                 </form>
             </div>

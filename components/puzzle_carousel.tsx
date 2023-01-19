@@ -57,55 +57,84 @@ export default function BlockCarousel(props: { title: String, alwaysOpen: boolea
 
     const { carouselFragment, slideToPrevItem, slideToNextItem } = useSpringCarousel({
         gutter: 24,
-        itemsPerSlide: 1,
+        itemsPerSlide: puzzle.pool.length < itemsPerSlide ? puzzle.pool.length || 1 : itemsPerSlide,
         withLoop: true,
-        items: puzzle.pool.length != 0 ? puzzle.pool.map((puzz) => ({
-            id: puzz.id.toString(),
+        items: puzzle.pool.length != 0 ? puzzle.pool.map((puz) => ({
+            id: puz.id.toString(),
             renderItem: (
-                <div >
-                    <div className={`relative cursor-pointer`}>
+                <div className="relative cursor-pointer bg-helix-light p-6 rounded-md flex flex-col ">
 
-                        <div className='bg-white border-2' style={{ height: "153", width: "272" }}>
-                            <div className="p-6 bg-gray-100 rounded-lg">
+                    <div className='text-helix-sky rounded-md'>
 
-                                <div className="my-3 flex">
+                        <div className="mb-3 flex">
 
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M7.864 4.243A7.5 7.5 0 0119.5 10.5c0 2.92-.556 5.709-1.568 8.268M5.742 6.364A7.465 7.465 0 004.5 10.5a7.464 7.464 0 01-1.15 3.993m1.989 3.559A11.209 11.209 0 008.25 10.5a3.75 3.75 0 117.5 0c0 .527-.021 1.049-.064 1.565M12 10.5a14.94 14.94 0 01-3.6 9.75m6.633-4.596a18.666 18.666 0 01-2.485 5.33" />
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#78e3ec" className="w-6 h-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                        </svg>
+
+
+
+                            <h3 className="text-lg font-bold ml-2">
+                                Puzzle
+                            </h3>
+
+
+
+
+                        </div>
+                        <table className="table-auto">
+                            <tbody>
+                                <tr>
+                                    <td className='font-bold py-1 px-3 flex'>
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#78e3ec" className="w-6 h-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                                     </svg>
 
 
-                                    <h3 className="text-lg font-bold ml-2">
-                                        Puzzle
-                                    </h3>
+                                        <p className="ml-3">Creator: </p>
+                                    </td>
+                                    <td>{puz.input.address}</td>
+
+                                </tr>
+                                
+                                <tr>
+                                    <td className='font-bold py-1 px-3 flex'>
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#78e3ec" className="w-6 h-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
+                                    </svg>
 
 
 
+                                        <p className="ml-3">Question: </p>
+                                    </td>
+                                    <td>{puz.input.description}</td>
 
-                                </div>
-                                <table className="table-auto">
-                                    <tbody>
-                                        <tr>
-                                            <td className='font-bold py-1 px-3'>Question: </td>
-                                            <td>{puzz.description}</td>
+                                </tr>
+                                <tr>
+                                    <td className='font-bold py-1 px-3 flex'>
 
-                                        </tr>
-                                        <tr>
-                                            <td className='font-bold py-1 px-3'>Hash:</td>
-                                            <td>{puzz.puzzle_hash}</td>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#78e3ec" className="w-6 h-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5l-3.9 19.5m-2.1-19.5l-3.9 19.5" />
+                                    </svg>
 
-                                        </tr>
-                                        
-                                    </tbody>
-                                </table>
+                                        <p className="ml-3">Hash: </p>
+                                    </td>
+                                    <td className='text-ellipsis'>{puz.input.hash.substring(0, 19)}</td>
+
+                                </tr>
+                                
+
+                            </tbody>
+                        </table>
 
 
-
-                            </div>
-                        </div>
 
 
                     </div>
+
+
                 </div>
 
             )

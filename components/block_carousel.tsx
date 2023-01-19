@@ -31,7 +31,6 @@ export default function BlockCarousel(props: { title: String, alwaysOpen: boolea
 
     const dispatch = useDispatch()
     const chain = useSelector((state: NocoinState) => state.blockchain.chain)
-    const blockchain_loading = useSelector((state: NocoinState) => state.blockchain.loading)
 
     useEffect(() => {
         dispatch({ type: blockActions.GET_BLOCKCHAIN_REQUEST })
@@ -60,12 +59,12 @@ export default function BlockCarousel(props: { title: String, alwaysOpen: boolea
 
     const { carouselFragment, slideToPrevItem, slideToNextItem } = useSpringCarousel({
         gutter: 24,
-        itemsPerSlide: 1,
+        itemsPerSlide: chain.length < itemsPerSlide ? chain.length || 1 : itemsPerSlide,
         withLoop: true,
         items: chain.length != 0 ? chain.map((block) => ({
             id: block.timestamp.toString(),
             renderItem: (
-                <div className='relative cursor-pointer bg-helix-light p-6 rounded-md flex flex-col 3xl:w-1/4 2xl:w-1/4 xl:w-1/3 lg:w-1/2 mlg:w-1/2 md:w-2/3 sm:w-full xsm:w-full xxsm:w-full'>
+                <div className='relative cursor-pointer bg-helix-light p-6 rounded-md flex flex-col'>
                     
                         <div className="text-helix-sky">
 
