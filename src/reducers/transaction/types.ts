@@ -6,6 +6,7 @@ import {
     SEND_COIN_REQUEST,
     SEND_COIN_SUCCESS,
     SEND_COIN_FAILURE,
+    RESET_RECENT_TRANSACTION
   } from "./actionTypes";
   
 
@@ -36,6 +37,10 @@ export interface TransactionState {
   
 export interface GetTransactionRequest {
   type: typeof GET_TRANSACTION_REQUEST;
+}
+  
+export interface ResetRecentTransaction {
+  type: typeof RESET_RECENT_TRANSACTION;
 }
   
 export interface SendCoinRequest {
@@ -92,4 +97,5 @@ export type TransactionActions =
   | GetTransactionFailure
   | SendCoinRequest
   | SendCoinSuccess
-  | SendCoinFailure;
+  | SendCoinFailure
+  | ResetRecentTransaction;

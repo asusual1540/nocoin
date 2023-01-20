@@ -5,6 +5,7 @@ import {
     SEND_COIN_REQUEST,
     SEND_COIN_SUCCESS,
     SEND_COIN_FAILURE,
+    RESET_RECENT_TRANSACTION
   } from "./actionTypes";
 
 
@@ -20,7 +21,12 @@ import {
     SendCoinSuccessPayload,
     SendCoinFailure,
     SendCoinFailurePayload,
+    ResetRecentTransaction,
   } from "./types";
+  
+  export const resetRecentTransaction = (): ResetRecentTransaction => ({
+    type: RESET_RECENT_TRANSACTION,
+  });
   
   export const getTransactionRequest = (): GetTransactionRequest => ({
     type: GET_TRANSACTION_REQUEST,

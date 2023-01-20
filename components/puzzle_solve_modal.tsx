@@ -7,43 +7,43 @@ import { NocoinState } from "../src/reducers/rootReducer";
 import * as puzzleAction from "../src/reducers/puzzle/actionTypes"
 
 
-export default function PuzzleCreateModal({ style, closePuzzleCreateModal, puzzleCreateModal, openPuzzleCreateModal }: any) {
+export default function PuzzleSolveModal({ style, closePuzzleSolveModal }: any) {
 
-    const [question, setQuestion] = useState('')
-    const [answer, setAnswer] = useState('')
+
+    const [solution, setSolution] = useState('')
     const [loading, setLoading] = useState<boolean>()
 
-    const [puzzleCreated, setPuzzleCreated] = useState<boolean>()
+
 
     const dispatch = useDispatch()
     const puzzle = useSelector((state: NocoinState) => state.puzzle)
 
     useEffect(() => {
 
-        if (puzzle.recent) {
+        if (puzzle.current) {
 
             setLoading(false)
-            setPuzzleCreated(true)
-            dispatch({ type: puzzleAction.RESET_RECENT_PUZZLE })
-            dispatch({ type: puzzleAction.GET_PUZZLE_REQUEST })
+
         }
 
 
     }, [puzzle])
 
 
+
+
     const handleSubmit = (e: any) => {
         setLoading(true)
         e.preventDefault();
-        const payload = { "description": question, "answer": answer }
+        const payload = { "puzzle_id": puzzle.current?.id, "solution": solution, "invalid": false }
         console.log("request sign up", payload)
-        dispatch({ type: puzzleAction.CREATE_PUZZLE_REQUEST, payload })
+        dispatch({ type: puzzleAction.SOLVE_PUZZLE_REQUEST, payload })
     }
 
     const handleClose = () => {
         setLoading(false)
-        setPuzzleCreated(false)
-        closePuzzleCreateModal()
+        // setPuzzleCreated(false)
+        closePuzzleSolveModal()
     }
 
 
@@ -67,25 +67,35 @@ export default function PuzzleCreateModal({ style, closePuzzleCreateModal, puzzl
                         <label className="block text-black text-md mb-2 text-white" htmlFor="question">
                             Question
                         </label>
-                        <textarea onChange={e => setQuestion(e.target.value)} className="shadow rounded-xl appearance-none border w-full py-2 px-3 caret-black leading-tight focus:outline-none focus:shadow-outline" id="question" placeholder="Type your question here">{question}</textarea>
+                        <textarea readOnly className="shadow rounded-xl appearance-none border w-full py-2 px-3 caret-black leading-tight focus:outline-none focus:shadow-outline" id="question">{puzzle.current?.input.description}</textarea>
                     </div>
                     <div className="mb-4">
                         <label className="block text-black text-md mb-2 text-white" htmlFor="answer">
                             Answer
                         </label>
-                        <input value={answer} onChange={e => setAnswer(e.target.value)} className="shadow rounded-xl appearance-none border w-full py-2 px-3 caret-black leading-tight focus:outline-none focus:shadow-outline" id="answer" type="text" placeholder="Type your answer here" />
+                        <input value={solution} onChange={e => setSolution(e.target.value)} className="shadow rounded-xl appearance-none border w-full py-2 px-3 caret-black leading-tight focus:outline-none focus:shadow-outline" id="answer" type="text" placeholder="Type your answer here" />
                     </div>
 
-                    <div className="flex justify-center">
 
-                        <button type="submit" className="helix-auth-button relative flex justify-center items-center" onClick={(e) => handleSubmit(e)}>
-                            <p>{loading && "Loading" || puzzleCreated && "Created" || "Create"} </p>
-                            <span className="absolute right-6">{loading && <img className="" src="/helix-loader.svg" width={30} />}
-                                {puzzleCreated && <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#78e3ec" className="w-6 h-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                                </svg>}
-                            </span>
-                        </button>
+                    <div className="flex">
+                        <div className="flex justify-center">
+
+                            <button type="button" className="helix-auth-button relative flex justify-center items-center" onClick={(e) => false}>
+                                <p>{loading && "Loading" || "Invalid"} </p>
+                                <span className="absolute right-6">{loading && <img className="" src="/helix-loader.svg" width={30} />}
+
+                                </span>
+                            </button>
+                        </div>
+                        <div className="flex justify-center">
+
+                            <button type="submit" className="helix-auth-button relative flex justify-center items-center" onClick={(e) => handleSubmit(e)}>
+                                <p>{loading && "Loading" || "Solve"} </p>
+                                <span className="absolute right-6">{loading && <img className="" src="/helix-loader.svg" width={30} />}
+
+                                </span>
+                            </button>
+                        </div>
                     </div>
 
 

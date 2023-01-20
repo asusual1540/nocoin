@@ -5,6 +5,7 @@ import {
     SEND_COIN_REQUEST,
     SEND_COIN_SUCCESS,
     SEND_COIN_FAILURE,
+    RESET_RECENT_TRANSACTION
   } from "./actionTypes";
   
   import { TransactionActions, TransactionState } from "./types";
@@ -42,6 +43,11 @@ import {
           error: "",
         };
   
+      case RESET_RECENT_TRANSACTION:
+        return {
+          ...state,
+          recent: null,
+        };
       case SEND_COIN_REQUEST:
         return {
           ...state,

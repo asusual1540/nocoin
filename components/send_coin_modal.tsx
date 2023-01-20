@@ -20,6 +20,8 @@ export default function SendCoinModal({ style, closeSendCoinModal, sendCoinModal
         if (transaction.recent) {
             setLoading(false)
             setCoinSent(true)
+            dispatch({ type: transactionAction.RESET_RECENT_TRANSACTION })
+            dispatch({ type: transactionAction.GET_TRANSACTION_REQUEST })
         }
     }, [transaction])
 

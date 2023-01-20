@@ -6,11 +6,19 @@ import {
     CREATE_PUZZLE_REQUEST,
     CREATE_PUZZLE_SUCCESS,
     CREATE_PUZZLE_FAILURE,
+    RESET_RECENT_PUZZLE,
+    SOLVE_PUZZLE_REQUEST,
+    SOLVE_PUZZLE_SUCCESS,
+    SOLVE_PUZZLE_FAILURE,
+    SELECT_PUZZLE
   } from "./actionTypes";
   
   
 export interface Puzzle {
   id: string,
+  solved: number,
+  invalid: number,
+  valid: number,
   output: {
       [address: string]: string
   },
@@ -28,12 +36,23 @@ export interface PuzzleState {
   loading: boolean;
   pending: boolean;
   recent: Puzzle | null;
+  current: Puzzle | null;
   pool: Puzzle[];
   error: string | null;
 }
   
+export interface SelectPuzzle {
+  type: typeof SELECT_PUZZLE;
+  payload: SelectPuzzlePayload;
+}
+
 export interface GetPuzzleRequest {
   type: typeof GET_PUZZLE_REQUEST;
+}
+
+  
+export interface ResetRecentPuzzle {
+  type: typeof RESET_RECENT_PUZZLE;
 }
 
 
@@ -53,6 +72,20 @@ export interface CreatePuzzleRequest {
 export interface CreatePuzzleRequestPayload {
   description: string;
   answer: string;
+}
+
+export interface SelectPuzzlePayload {
+  puzzle: Puzzle;
+}
+export interface SolvePuzzleRequest {
+  type: typeof SOLVE_PUZZLE_REQUEST;
+  payload: SolvePuzzleRequestPayload;
+}
+
+export interface SolvePuzzleRequestPayload {
+  puzzle_id: string;
+  solution: string;
+  invalid: boolean;
 }
 
 
@@ -85,6 +118,24 @@ export type CreatePuzzleFailure = {
   payload: CreatePuzzleFailurePayload,
 };
 
+export interface SolvePuzzleSuccessPayload {
+  status: boolean;
+}
+
+export interface SolvePuzzleFailurePayload {
+  error: string;
+}
+
+export type SolvePuzzleSuccess = {
+  type: typeof SOLVE_PUZZLE_SUCCESS,
+  payload: SolvePuzzleSuccessPayload,
+};
+
+export type SolvePuzzleFailure = {
+  type: typeof SOLVE_PUZZLE_FAILURE,
+  payload: SolvePuzzleFailurePayload,
+};
+
 
 
 export type PuzzleActions =
@@ -93,4 +144,9 @@ export type PuzzleActions =
   | GetPuzzleFailure
   | CreatePuzzleRequest
   | CreatePuzzleSuccess
-  | CreatePuzzleFailure;
+  | CreatePuzzleFailure
+  | SolvePuzzleRequest
+  | SolvePuzzleSuccess
+  | SolvePuzzleFailure
+  | ResetRecentPuzzle
+  | SelectPuzzle;

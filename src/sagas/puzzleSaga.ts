@@ -6,10 +6,13 @@ import {
   getPuzzleFailure,
   createPuzzleSuccess,
   createPuzzleFailure,
+  getPuzzleRequest,
+  solvePuzzleSuccess,
+  solvePuzzleFailure,
 } from "../reducers/puzzle/actions";
 
-import { GET_PUZZLE_REQUEST, CREATE_PUZZLE_REQUEST } from "../reducers/puzzle/actionTypes";
-import { Puzzle, CreatePuzzleRequestPayload } from "../reducers/puzzle/types";
+import { GET_PUZZLE_REQUEST, CREATE_PUZZLE_REQUEST, SOLVE_PUZZLE_REQUEST } from "../reducers/puzzle/actionTypes";
+import { Puzzle, CreatePuzzleRequestPayload, SolvePuzzleRequestPayload } from "../reducers/puzzle/types";
 
 
 
@@ -67,10 +70,50 @@ function* createPuzzleSaga(action: any) {
         puzzle: response.data
       })
     );
+    yield put(
+      getPuzzleRequest()
+    );
+    
     // action.payload.callback(response.token);
   } catch (e: any) {
     yield put(
       createPuzzleFailure({
+        error: e.message,
+      })
+    );
+  }
+}
+
+const solvePuzzle = async (payload: SolvePuzzleRequestPayload) => {
+  console.log("payload", payload)
+  const {data}  = await server.post('/puzzle/solve', {puzzle_id : payload.puzzle_id, invalid: payload.invalid, solution: payload.solution})
+  console.log("data", data)
+  console.log("data", typeof(data))
+  
+  return {data: data};
+};
+
+
+
+function* solvePuzzleSaga(action: any) {
+  try {
+    const response: { data: boolean } = yield call(solvePuzzle, {
+      puzzle_id : action.payload.puzzle_id, invalid: action.payload.invalid, solution: action.payload.solution
+    });
+    console.log("response.pool", response.data)
+    yield put(
+      solvePuzzleSuccess({
+        status: response.data
+      })
+    );
+    yield put(
+      getPuzzleRequest()
+    );
+    
+    // action.payload.callback(response.token);
+  } catch (e: any) {
+    yield put(
+      solvePuzzleFailure({
         error: e.message,
       })
     );
@@ -82,6 +125,7 @@ function* createPuzzleSaga(action: any) {
 function* puzzleSaga() {
   yield all([takeLatest(GET_PUZZLE_REQUEST, getPuzzleSaga)]);
   yield all([takeLatest(CREATE_PUZZLE_REQUEST, createPuzzleSaga)]);
+  yield all([takeLatest(SOLVE_PUZZLE_REQUEST, solvePuzzleSaga)]);
 }
 
 export default puzzleSaga;
